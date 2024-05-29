@@ -29,6 +29,12 @@ export class AuthenticationService {
       if (user) {
         const { password, fullname, email, ...rest } = user;
 
+        user.device_id = loginDto?.device_id
+          ? loginDto.device_id
+          : user?.device_id;
+
+        await this.userRepository.save(user);
+
         const isPasswordMatched =
           loginDto.password.toLowerCase() === password.toLowerCase();
 
